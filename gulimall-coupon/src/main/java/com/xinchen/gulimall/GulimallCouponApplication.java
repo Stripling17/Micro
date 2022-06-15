@@ -1,8 +1,13 @@
-package com.xinchen.gulimallcoupon;
+package com.xinchen.gulimall;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * 优惠服务
+ */
+@MapperScan("com.xinchen.gulimall.coupon.dao")
 @SpringBootApplication
 public class GulimallCouponApplication {
 
