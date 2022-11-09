@@ -2,8 +2,10 @@ package com.xinchen.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xinchen.common.utils.PageUtils;
+import com.xinchen.gulimall.product.entity.BrandEntity;
 import com.xinchen.gulimall.product.entity.CategoryBrandRelationEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,15 @@ import java.util.Map;
 public interface CategoryBrandRelationService extends IService<CategoryBrandRelationEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void detailSave(CategoryBrandRelationEntity categoryBrandRelation);
+
+    void updateBrand(Long brandId, String name);
+
+    void updateCategory(Long catId, String name);
+
+    void deleteRelationByBrand(List<Long> BidsList);
+
+    List<BrandEntity> getBrandsByCatId(Long catId);
 }
 

@@ -12,5 +12,15 @@
         <result property="catelogName" column="catelog_name"/>
     </resultMap>
 
+    <update id="updateCategory">
+        update pms_category_brand_relation set catelog_name = #{name} where catelog_id = #{catId}
+    </update>
+    <delete id="deleteBatchByBids">
+        delete from pms_category_brand_relation where brand_id in
+        <foreach collection="Coll" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
 
 </mapper>

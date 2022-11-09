@@ -3,12 +3,9 @@ package com.xinchen.gulimall.coupon.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.xinchen.common.to.SkuReductionTo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.xinchen.gulimall.coupon.entity.SkuFullReductionEntity;
 import com.xinchen.gulimall.coupon.service.SkuFullReductionService;
@@ -29,6 +26,16 @@ import com.xinchen.common.utils.R;
 public class SkuFullReductionController {
     @Autowired
     private SkuFullReductionService skuFullReductionService;
+
+    /**
+     * 保存产品上新的折扣、满减等信息
+     */
+    @PostMapping("/saveInfo")
+    //@RequiresPermissions("coupon:skufullreduction:list")
+    public R saveInfo(@RequestBody SkuReductionTo skuReductionTo){
+        skuFullReductionService.SkuReduction(skuReductionTo);
+        return R.ok();
+    }
 
     /**
      * 列表
