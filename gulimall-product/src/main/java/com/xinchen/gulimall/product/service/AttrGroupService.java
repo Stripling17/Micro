@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xinchen.common.utils.PageUtils;
 import com.xinchen.gulimall.product.entity.AttrGroupEntity;
 import com.xinchen.gulimall.product.vo.AttrGroupWithAttrsVo;
+import com.xinchen.gulimall.product.vo.SkuItemVo;
+import com.xinchen.gulimall.product.vo.SpuItemAttrGroupVo;
 
 import java.util.List;
 import java.util.Map;
@@ -24,5 +26,7 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     void updateAttrAndGroup(AttrGroupEntity attrGroup);
 
     List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId);
+
+    List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long catalogId, Long spuId);
 }
 

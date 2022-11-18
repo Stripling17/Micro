@@ -108,7 +108,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         List<String> images = vo.getImages();
         spuImagesService.saveSpuImages(infoEntity.getId(),images);
 
-        //4.保存Spu的保存Spu的规格参数：pms_sku_sale_attr_value
+        //4.保存Spu的规格参数：pms_sku_sale_attr_value
         List<BaseAttrs> baseAttrs = vo.getBaseAttrs();
         List<ProductAttrValueEntity> collect = baseAttrs.stream().map(attr -> {
             ProductAttrValueEntity attrValueEntity = new ProductAttrValueEntity();
@@ -164,7 +164,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 Long skuId = skuInfoEntity.getSkuId();
                 List<SkuImagesEntity> imagesEntities = images1.stream().map(img -> {
                     SkuImagesEntity skuImagesEntity = new SkuImagesEntity();
-                    skuImagesEntity.setId(skuId);
+                    skuImagesEntity.setSkuId(skuId);
                     skuImagesEntity.setImgUrl(img.getImgUrl());
                     skuImagesEntity.setDefaultImg(img.getDefaultImg());
                     return skuImagesEntity;

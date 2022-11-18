@@ -13,6 +13,8 @@ import com.xinchen.gulimall.product.vo.AttrRespVo;
 import com.xinchen.gulimall.product.vo.AttrVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -59,6 +61,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return new PageUtils(page);
     }
 
+    @CacheEvict(value = "attr" , allEntries = true) //失效模式
     @Transactional
     @Override
     public void saveAttr(AttrVo attrVo) {
@@ -77,6 +80,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         }
     }
 
+    @Cacheable(value = "attr",key = "#root.method.name")
     @Override
     public PageUtils queryBaseAttrPage(Map<String, Object> params, Long catelogId, String type) {
         QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<AttrEntity>()
@@ -125,6 +129,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return pageUtils;
     }
 
+    @Cacheable(value = "attr",key = "'attrinfo:'+#root.args[0]")
     @Override
     public AttrRespVo getAttrInfo(Long attrId) {
         AttrRespVo respVo = new AttrRespVo();
@@ -164,6 +169,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return respVo;
     }
 
+    @CacheEvict(value = "attr" , allEntries = true) //失效模式
     @Transactional
     @Override
     public void updateAttr(AttrVo attr) {
@@ -192,6 +198,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
     }
 
+    @CacheEvict(value = "attr" , allEntries = true) //失效模式
     @Transactional
     @Override
     public void removeAttrAndGroupRelation(Collection<? extends Serializable> idList) {

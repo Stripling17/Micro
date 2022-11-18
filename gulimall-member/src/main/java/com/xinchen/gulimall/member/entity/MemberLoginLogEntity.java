@@ -9,7 +9,7 @@ import lombok.Data;
 
 /**
  * 会员登录记录
- * 
+ *
  * @author Li Chonggao
  * @email lichonggao@qq.com
  * @date 2022-07-05 09:31:04
@@ -41,7 +41,7 @@ public class MemberLoginLogEntity implements Serializable {
 	 */
 	private String city;
 	/**
-	 * 登录类型[1-web，2-app]
+	 * 登录类型[1-controller，2-app]
 	 */
 	private Integer loginType;
 

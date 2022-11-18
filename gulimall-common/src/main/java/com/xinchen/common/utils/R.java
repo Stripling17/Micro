@@ -22,6 +22,15 @@ import java.util.Map;
  */
 public class R extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
+
+	//利用fastjson进行逆转
+	public <T> T getData(String key , TypeReference<T> typeReference){
+		Object data = get(key); //默认是map类型
+		String jsonString = JSON.toJSONString(data);
+		T t = JSON.parseObject(jsonString, typeReference);
+		return t;
+	}
+
 /* 因为R<T>是一个HashMap的原因，自己扩展的私有属性全部失效 */
 //	private T data;
 //
@@ -50,15 +59,15 @@ public class R extends HashMap<String, Object> {
 		put("code", 0);
 		put("msg", "success");
 	}
-	
+
 	public static R error() {
 		return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "未知异常，请联系管理员");
 	}
-	
+
 	public static R error(String msg) {
 		return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, msg);
 	}
-	
+
 	public static R error(int code, String msg) {
 		R r = new R();
 		r.put("code", code);
@@ -71,13 +80,13 @@ public class R extends HashMap<String, Object> {
 		r.put("msg", msg);
 		return r;
 	}
-	
+
 	public static R ok(Map<String, Object> map) {
 		R r = new R();
 		r.putAll(map);
 		return r;
 	}
-	
+
 	public static R ok() {
 		return new R();
 	}

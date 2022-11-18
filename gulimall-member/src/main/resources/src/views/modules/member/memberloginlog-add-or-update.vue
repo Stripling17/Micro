@@ -54,7 +54,7 @@
             { required: true, message: 'city不能为空', trigger: 'blur' }
           ],
           loginType: [
-            { required: true, message: '登录类型[1-web，2-app]不能为空', trigger: 'blur' }
+            { required: true, message: '登录类型[1-controller，2-app]不能为空', trigger: 'blur' }
           ]
         }
       }

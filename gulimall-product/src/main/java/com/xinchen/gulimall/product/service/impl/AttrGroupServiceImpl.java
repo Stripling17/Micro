@@ -1,30 +1,26 @@
 package com.xinchen.gulimall.product.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.xinchen.gulimall.product.dao.AttrDao;
-import com.xinchen.gulimall.product.entity.AttrEntity;
-import com.xinchen.gulimall.product.service.AttrAttrgroupRelationService;
-import com.xinchen.gulimall.product.service.AttrService;
-import com.xinchen.gulimall.product.vo.AttrGroupWithAttrsVo;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xinchen.common.utils.PageUtils;
 import com.xinchen.common.utils.Query;
-
 import com.xinchen.gulimall.product.dao.AttrGroupDao;
+import com.xinchen.gulimall.product.entity.AttrEntity;
 import com.xinchen.gulimall.product.entity.AttrGroupEntity;
 import com.xinchen.gulimall.product.service.AttrGroupService;
+import com.xinchen.gulimall.product.service.AttrService;
+import com.xinchen.gulimall.product.vo.AttrGroupWithAttrsVo;
+import com.xinchen.gulimall.product.vo.SpuItemAttrGroupVo;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("attrGroupService")
@@ -97,6 +93,48 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
             return attrGroupWithAttrsVo;
         }).collect(Collectors.toList());
 
+        return vos;
+    }
+
+    /**
+     * 联合查询
+     *## 当前spu有多少对应的属性分组 groupName/attrName/attrValues
+     * SELECT  pav.spu_id,
+     * 	ag.attr_group_id,
+     * 	ag.attr_group_name,
+     * 	aar.attr_id,
+     * 	attr.attr_name,
+     * 	pav.attr_value
+     * FROM
+     * pms_attr_group ag
+     * LEFT JOIN
+     * pms_attr_attrgroup_relation aar
+     * ON aar.attr_group_id=ag.attr_group_id
+     * LEFT JOIN pms_attr attr
+     * ON attr.attr_id = aar.attr_id
+     * LEFT JOIN pms_product_attr_value pav
+     * ON pav.attr_id = attr.attr_id
+     * WHERE ag.catelog_id = 225 AND pav.spu_id = 1
+     */
+    @Override
+    public List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long catalogId, Long spuId) {
+        /**
+         * 分步查询
+         */
+        //spuId -> pms_product_attr_value:attr_id,attr_name,attr_value[SpuBaseAttrVo]
+        //1.查出当前spu对应的所有属性的分组信息以及当前分组下的所有属性对应的值
+//        SkuItemVo.SpuItemAttrGroupVo groupAttr = new SkuItemVo.SpuItemAttrGroupVo();
+//        List<SkuItemVo.SpuBaseAttrVo> baseAttrVos = new ArrayList<>();
+//        SkuItemVo.SpuBaseAttrVo baseAttr = new SkuItemVo.SpuBaseAttrVo();
+//        baseAttr.setAttrName("baseAttrName");
+//        List<String> attrValues = new ArrayList<>();
+//        baseAttr.setAttrValues(attrValues);
+//        baseAttrVos.add(baseAttr);
+//        groupAttr.setAttrs(baseAttrVos);
+        /**
+         * 联合查询
+         */
+        List<SpuItemAttrGroupVo> vos = this.baseMapper.getAttrGroupWithAttrsBySpuId(catalogId,spuId);
         return vos;
     }
 

@@ -2,6 +2,8 @@ package com.xinchen.gulimall.product.service.impl;
 
 import com.xinchen.gulimall.product.service.CategoryBrandRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +42,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
         return new PageUtils(page);
     }
 
+    @CacheEvict(value = "brand" , allEntries = true) //失效模式
     @Transactional
     @Override
     public void updateDetail(BrandEntity brand) {
@@ -51,6 +54,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
         }
     }
 
+    @CacheEvict(value = "brand" , allEntries = true) //失效模式
     @Transactional
     @Override
     public void removeBrandByIds(List<Long> BidsList) {
@@ -59,6 +63,12 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
 
         //2.批量删除品牌信息
         this.baseMapper.deleteBatchIds(BidsList);
+    }
+
+    @Cacheable(value = "brand",key = "'brandinfos:'+#root.args[0]")
+    @Override
+    public List<BrandEntity> getBrandsByIds(List<Long> brandIds) {
+        return baseMapper.selectList(new QueryWrapper<BrandEntity>().in("brand_id",brandIds));
     }
 
 }
