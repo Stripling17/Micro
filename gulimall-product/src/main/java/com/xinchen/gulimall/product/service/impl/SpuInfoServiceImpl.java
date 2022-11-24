@@ -1,14 +1,19 @@
 package com.xinchen.gulimall.product.service.impl;
 
 import com.alibaba.fastjson.TypeReference;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xinchen.common.constant.ProductConstant;
 import com.xinchen.common.to.MemberPrice;
 import com.xinchen.common.to.SkuHasStockVo;
 import com.xinchen.common.to.SkuReductionTo;
 import com.xinchen.common.to.SpuBoundTo;
 import com.xinchen.common.to.es.SkuEsModel;
+import com.xinchen.common.utils.PageUtils;
+import com.xinchen.common.utils.Query;
 import com.xinchen.common.utils.R;
-import com.xinchen.gulimall.product.dao.SpuInfoDescDao;
+import com.xinchen.gulimall.product.dao.SpuInfoDao;
 import com.xinchen.gulimall.product.entity.*;
 import com.xinchen.gulimall.product.feign.CouponFeignService;
 import com.xinchen.gulimall.product.feign.SearchFeignService;
@@ -17,22 +22,13 @@ import com.xinchen.gulimall.product.service.*;
 import com.xinchen.gulimall.product.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.xinchen.common.utils.PageUtils;
-import com.xinchen.common.utils.Query;
-
-import com.xinchen.gulimall.product.dao.SpuInfoDao;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 
 @Service("spuInfoService")

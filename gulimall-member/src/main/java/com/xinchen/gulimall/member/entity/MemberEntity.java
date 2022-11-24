@@ -9,7 +9,7 @@ import lombok.Data;
 
 /**
  * 会员
- * 
+ *
  * @author Li Chonggao
  * @email lichonggao@qq.com
  * @date 2022-07-05 09:31:04
@@ -92,5 +92,10 @@ public class MemberEntity implements Serializable {
 	 * 注册时间
 	 */
 	private Date createTime;
+
+	//=======================
+	private String socialUid;
+	private String accessToken;
+	private Long expiresIn;
 
 }

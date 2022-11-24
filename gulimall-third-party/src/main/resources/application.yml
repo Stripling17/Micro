@@ -8,3 +8,8 @@
 #
 #server:
 #  port: 30000
+
+#spring:
+#  alicloud:
+#    sms:
+#      path:

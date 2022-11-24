@@ -59,27 +59,32 @@
 						<div></div>
 						请输入账户名和密码
 					</div>
-					<ul>
-						<li class="top_1">
-							<img src="/static/login/JD_img/user_03.png" class="err_img1" />
-							<input type="text" placeholder=" 邮箱/用户名/已验证手机" class="user" />
-						</li>
-						<li>
-							<img src="/static/login/JD_img/user_06.png" class="err_img2" />
-							<input type="password" placeholder=" 密码" class="password" />
-						</li>
-						<li class="bri">
-							<a href="/static/login/">忘记密码</a>
-						</li>
-						<li class="ent"><button class="btn2"><a class="a">登 &nbsp; &nbsp;录</a></button></li>
-					</ul>
+					<form action="/login" method="post">
+						<span style="color: red" th:text="${errors!=null?(#maps.containsKey(errors,'msg')?errors.msg:''):''}"></span>
+						<ul>
+							<li class="top_1">
+								<img src="/static/login/JD_img/user_03.png" class="err_img1"/>
+								<input name="loginAcct" type="text" placeholder=" 邮箱/用户名/已验证手机" class="user"/>
+							</li>
+							<li>
+								<img src="/static/login/JD_img/user_06.png" class="err_img2"/>
+								<input name="password" type="password" placeholder=" 密码" class="password"/>
+							</li>
+							<li class="bri">
+								<a href="/static/login/">忘记密码</a>
+							</li>
+							<li class="ent">
+								<button class="btn2" type="submit"><a >登 &nbsp; &nbsp;录</a></button>
+							</li>
+						</ul>
+					</form>
 				</div>
 				<div class="si_out">
 					<ul>
 						<li>
-							<a href="/static/login/#">
-								<img src="/static/login/JD_img/qq.png" />
-								<span>QQ</span>
+							<a href="https://api.weibo.com/oauth2/authorize?client_id=3620300326&response_type=code&redirect_uri=http://auth.gulimall.com/oauth/weibo/success">
+								<img style="width: 50px;height: 18px" src="/static/login/JD_img/weibo.png" />
+<!--								<span>微博</span>-->
 							</a>
 						</li>
 						<li class="f4"> | </li>
@@ -92,7 +97,7 @@
 					</ul>
 					<h5 class="rig">
 						<img src="/static/login/JD_img/4de5019d2404d347897dee637895d02b_25.png" />
-						<span><a href="/static/login/http://127.0.0.1:8020/JD/JD_%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2(1)/index.html?__hbt=1512049011905">立即注册</a></span>
+						<span><a href="http://auth.gulimall.com/register.html">立即注册</a></span>
 					</h5>
 				</div>
 			</div>

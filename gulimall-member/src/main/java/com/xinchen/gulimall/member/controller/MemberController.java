@@ -3,13 +3,15 @@ package com.xinchen.gulimall.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.xinchen.common.exception.BizCodeEnume;
+import com.xinchen.gulimall.member.exception.PhoneExsitException;
+import com.xinchen.gulimall.member.exception.UsernameExistException;
 import com.xinchen.gulimall.member.feign.CouponFeignService;
+import com.xinchen.gulimall.member.vo.MemberLogVo;
+import com.xinchen.gulimall.member.vo.MemberRegisterVo;
+import com.xinchen.gulimall.member.vo.SocialUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.xinchen.gulimall.member.entity.MemberEntity;
 import com.xinchen.gulimall.member.service.MemberService;
@@ -42,6 +44,41 @@ public class MemberController {
         R memberCoupons = couponFeignService.memberCoupons();
 
         return R.ok().put("member",memberEntity).put("coupons",memberCoupons.get("coupons"));
+    }
+
+    @PostMapping("/oauth2/login")
+    public R oauth2Login(@RequestBody SocialUser socialUser) throws Exception {
+
+        MemberEntity entity = memberService.login(socialUser);
+        if(entity != null){
+            return R.ok().setData(entity);
+        }else {
+            return R.error(BizCodeEnume.LOGINACCT_PASSWORD_INVALILD_EXCEPITON.getCode(),BizCodeEnume.LOGINACCT_PASSWORD_INVALILD_EXCEPITON.getMsg());
+        }
+    }
+
+    @PostMapping("/login")
+    public R login(@RequestBody MemberLogVo vo) {
+
+        MemberEntity entity = memberService.login(vo);
+        if(entity != null){
+            return R.ok().setData(entity);
+        }else {
+            return R.error(BizCodeEnume.LOGINACCT_PASSWORD_INVALILD_EXCEPITON.getCode(),BizCodeEnume.LOGINACCT_PASSWORD_INVALILD_EXCEPITON.getMsg());
+        }
+    }
+
+    @PostMapping("/register")
+    //远程调用传对象会转为Json
+    public R register(@RequestBody MemberRegisterVo vo) {
+        try {
+            memberService.register(vo);
+        }catch (UsernameExistException u){
+            return R.error(BizCodeEnume.USER_EXIST_EXCEPITON.getCode(), BizCodeEnume.USER_EXIST_EXCEPITON.getMsg());
+        }catch (PhoneExsitException p) {
+            return R.error(BizCodeEnume.PHONE_EXIST_EXCEPITON.getCode(), BizCodeEnume.PHONE_EXIST_EXCEPITON.getMsg());
+        }
+        return R.ok();
     }
 
     /**

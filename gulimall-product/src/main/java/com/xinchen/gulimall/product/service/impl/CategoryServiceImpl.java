@@ -161,7 +161,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Cacheable(value = {"category"}, key = "#root.method.name")
     @Override
     public Map<String, List<Catelog2Vo>> getCatelogJson() {
-        System.out.println("查询了数据库......");
+        //System.out.println("查询了数据库......");
         List<CategoryEntity> selectList = baseMapper.selectList(null);
         //1.查出所有一级分类
         List<CategoryEntity> level1Categorys = getParent_cid(selectList, 0L);
