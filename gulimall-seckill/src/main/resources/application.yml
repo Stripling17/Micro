@@ -1,0 +1,18 @@
+#spring:
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+#  application:
+#    name: gulimall-seckill
+#  thymeleaf:
+#    cache: false
+#  redis:
+#    host: 192.168.56.10
+#    port: 6379
+#  mvc:
+#    format:
+#      date: yyyy-MM-dd HH:mm:ss
+#
+#server:
+#  port: 25000

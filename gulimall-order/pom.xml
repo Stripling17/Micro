@@ -47,7 +47,80 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--  RabbitMQ的依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <!--模板引擎：thymeleaf-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!--dev-tools-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--Redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>io.lettuce</groupId>-->
+<!--                    <artifactId>lettuce-core</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+        </dependency>
+        <!--jedis客户端-->
+<!--        <dependency>-->
+<!--            <groupId>redis.clients</groupId>-->
+<!--            <artifactId>jedis</artifactId>-->
+<!--        </dependency>-->
+        <!--整合SpringSession完成Session共享问题-->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+        <!--引入aop-starter场景-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!--引入seata-starter场景-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+            <version>2021.0.4.0</version>
+            <!--需要排除seata-all-->
+            <exclusions>
+                <exclusion>
+                    <groupId>io.seata</groupId>
+                    <artifactId>seata-spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-spring-boot-starter</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+        <!--属性配置的提示工具-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--alipay-SDK-->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>4.34.0.ALL</version>
+        </dependency>
     </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -77,5 +150,111 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
+        <!--<?xml version="1.0" encoding="UTF-8"?>-->
+        <!--<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+        <!--         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">-->
+        <!--    <modelVersion>4.0.0</modelVersion>-->
+        <!--    <parent>-->
+        <!--        <groupId>org.springframework.boot</groupId>-->
+        <!--        <artifactId>spring-boot-starter-parent</artifactId>-->
+        <!--        <version>2.1.8.RELEASE</version>-->
+        <!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+        <!--    </parent>-->
+        <!--    <groupId>com.xinchen</groupId>-->
+        <!--    <artifactId>gulimall-order</artifactId>-->
+        <!--    <version>0.0.1-SNAPSHOT</version>-->
+        <!--    <name>gulimall-order</name>-->
+        <!--    <description>Demo project for Spring Boot</description>-->
+        <!--    <properties>-->
+        <!--        <java.version>1.8</java.version>-->
+        <!--        <spring-cloud.version>Greenwich.SR3</spring-cloud.version>-->
+        <!--    </properties>-->
+        <!--    <dependencies>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.xinchen.gulimall</groupId>-->
+        <!--            <artifactId>gulimall-common</artifactId>-->
+        <!--            <version>0.0.1-SNAPSHOT</version>-->
+        <!--            <exclusions>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>com.alibaba.cloud</groupId>-->
+        <!--                    <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>com.alibaba.cloud</groupId>-->
+        <!--                    <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
+        <!--                </exclusion>-->
+        <!--            </exclusions>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-web</artifactId>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash;远程调用&ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-openfeign</artifactId>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash;解决远程调用后项目无法启动&ndash;&gt;-->
+        <!--        &lt;!&ndash;        <dependency>&ndash;&gt;-->
+        <!--        &lt;!&ndash;            <groupId>org.springframework.cloud</groupId>&ndash;&gt;-->
+        <!--        &lt;!&ndash;            <artifactId>spring-cloud-starter-loadbalancer</artifactId>&ndash;&gt;-->
+        <!--        &lt;!&ndash;        </dependency>&ndash;&gt;-->
+        <!--        &lt;!&ndash;解决配置bootstrap.properties配置文件不生效&ndash;&gt;-->
+        <!--        &lt;!&ndash;        <dependency>&ndash;&gt;-->
+        <!--        &lt;!&ndash;            <groupId>org.springframework.cloud</groupId>&ndash;&gt;-->
+        <!--        &lt;!&ndash;            <artifactId>spring-cloud-starter-bootstrap</artifactId>&ndash;&gt;-->
+        <!--        &lt;!&ndash;        </dependency>&ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-test</artifactId>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash;  RabbitMQ的依赖 &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-amqp</artifactId>-->
+        <!--        </dependency>-->
+        <!--    </dependencies>-->
+        <!--    <dependencyManagement>-->
+        <!--        <dependencies>-->
+        <!--            &lt;!&ndash;            <dependency>&ndash;&gt;-->
+        <!--            &lt;!&ndash;                &lt;!&ndash;SpringCloud:Nacos相关&ndash;&gt;&ndash;&gt;-->
+        <!--            &lt;!&ndash;                <groupId>com.alibaba.cloud</groupId>&ndash;&gt;-->
+        <!--            &lt;!&ndash;                <artifactId>spring-cloud-alibaba-dependencies</artifactId>&ndash;&gt;-->
+        <!--            &lt;!&ndash;                <version>2021.0.1.0</version>&ndash;&gt;-->
+        <!--            &lt;!&ndash;                <type>pom</type>&ndash;&gt;-->
+        <!--            &lt;!&ndash;                <scope>import</scope>&ndash;&gt;-->
+        <!--            &lt;!&ndash;            </dependency>&ndash;&gt;-->
+        <!--            <dependency>-->
+        <!--                <groupId>org.springframework.cloud</groupId>-->
+        <!--                <artifactId>spring-cloud-dependencies</artifactId>-->
+        <!--                <version>${spring-cloud.version}</version>-->
+        <!--                <type>pom</type>-->
+        <!--                <scope>import</scope>-->
+        <!--            </dependency>-->
+        <!--        </dependencies>-->
+        <!--    </dependencyManagement>-->
+
+        <!--    <build>-->
+        <!--        <plugins>-->
+        <!--            <plugin>-->
+        <!--                <groupId>org.springframework.boot</groupId>-->
+        <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+        <!--                <version>2.7.0</version>-->
+        <!--                <configuration>-->
+        <!--                    <excludes>-->
+        <!--                        <exclude>-->
+        <!--                            <groupId>org.projectlombok</groupId>-->
+        <!--                            <artifactId>lombok</artifactId>-->
+        <!--                        </exclude>-->
+        <!--                    </excludes>-->
+        <!--                </configuration>-->
+        <!--            </plugin>-->
+        <!--        </plugins>-->
+        <!--    </build>-->
+        <!--</project>-->
+
+
+
+

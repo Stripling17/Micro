@@ -42,6 +42,13 @@
 #            - Path=/api/ware/**
 #          filters:
 #            - RewritePath=/api/(?<segment>.*),/$\{segment}
+#        # 优惠服务
+#        - id: coupon_route
+#          uri: lb://gulimall-coupon
+#          predicates:
+#            - Path=/api/coupon/**
+#          filters:
+#            - RewritePath=/api/(?<segment>.*),/$\{segment}
 #
 #        - id: admin_route
 #          uri: lb://renren-fast
@@ -54,7 +61,7 @@
 #          uri: lb://gulimall-product
 #          predicates:
 #            - Host=gulimall.com,item.gulimall.com
-#        #按照Host地址进行映射
+#        #按照检索服务地址进行映射
 #        - id: gulimall_search_route
 #          uri: lb://gulimall-search
 #          predicates:
@@ -69,6 +76,21 @@
 #          uri: lb://gulimall-cart
 #          predicates:
 #            - Host=cart.gulimall.com
+#        #按照购物车服务地址进行映射
+#        - id: gulimall_order_route
+#          uri: lb://gulimall-order
+#          predicates:
+#            - Host=order.gulimall.com
+#        #按照会员服务地址进行映射
+#        - id: gulimall_member_route
+#          uri: lb://gulimall-member
+#          predicates:
+#            - Host=member.gulimall.com
+#        #按照秒杀服务地址进行映射
+#        - id: gulimall_seckill_route
+#          uri: lb://gulimall-seckill
+#          predicates:
+#            - Host=seckill.gulimall.com
 #
 ## 1、请求网关、http://localhost:88/renren-fast/api/captcha.jpg?
 ## 2、通过负载均衡，拿到网关地址及其对应的端口号 ： uri: lb://renren-fast

@@ -20,6 +20,7 @@ import com.xinchen.gulimall.product.feign.SearchFeignService;
 import com.xinchen.gulimall.product.feign.WareFeignService;
 import com.xinchen.gulimall.product.service.*;
 import com.xinchen.gulimall.product.vo.*;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,7 +83,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     /**
      * SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+     * Seata-At：分布式事务
+     * @GlobalTransactional: Seata-AT:后台管理程序提交的一些增删改查服务【不要求超高的并发】
      */
+    //@GlobalTransactional
     @Transactional
     @Override
     public void saveSpuInfo(SpuSaveVo vo) {
@@ -373,6 +377,14 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
              */
         }
 
+    }
+
+    @Override
+    public SpuInfoEntity getSpuInfoBySkuId(Long skuId) {
+        SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
+        Long spuId = skuInfo.getSpuId();
+        SpuInfoEntity spuInfoEntity = this.baseMapper.selectById(spuId);
+        return spuInfoEntity;
     }
 
 

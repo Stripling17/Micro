@@ -43,6 +43,5 @@
 #  level:
 #    com.xinchen.gulimall: debug
 #
-#
-#
-#
+#seata:
+#  tx-service-group: gulimall-product-fescar-service-group

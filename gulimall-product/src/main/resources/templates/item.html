@@ -61,11 +61,14 @@
             </ul>
             <ul class="header_ul_right">
                 <li style="border: 0;">
-                    <a href="http://auth.gulimall.com/login.html" th:if="${session.loginUser==null}" class="aa">你好，请登录</a>
+                    <a href="http://auth.gulimall.com/login.html" th:if="${session.loginUser==null}"
+                       class="aa">你好，请登录</a>
                     <a th:if="${session.loginUser!=null}" class="aa" style="width: 100px">[[${session.loginUser.nickname}]]</a>
                 </li>
-                <li th:if="${session.loginUser==null}"><a href="http://auth.gulimall.com/register.html" style="color: red;"
-                       >免费注册</a> |</li>
+                <li th:if="${session.loginUser==null}"><a href="http://auth.gulimall.com/register.html"
+                                                          style="color: red;"
+                >免费注册</a> |
+                </li>
                 <li><a href="/static/item/javascript:;" class="aa">我的订单</a> |</li>
                 <li class="jingdong"><a href="/static/item/javascript:;">我的京东</a><span
                         class="glyphicon glyphicon-menu-down">|</span>
@@ -523,8 +526,13 @@
                             <span>￥</span>
                             <span th:text="${#numbers.formatDecimal(item.info.price,3,2)}">4499.00</span>
                         </li>
-                        <li>
-                            预约享资格
+                        <li style="color: red;" th:if="${item.seckillInfo != null}">
+                            <span th:if="${#dates.createNow().getTime < item.seckillInfo.startTime}">
+                                商品将会在&nbsp;[[${#dates.format(new java.util.Date(item.seckillInfo.startTime),"yyyy-MM-dd HH:mm:ss")}]]&nbsp;进行秒杀
+                            </span>
+                            <span th:if="${#dates.createNow().getTime >= item.seckillInfo.startTime && #dates.createNow().getTime <= item.seckillInfo.endTime}">
+                                秒杀价：[[${#numbers.formatDecimal(item.seckillInfo.seckillPrice,1,2)}]]
+                            </span>
                         </li>
                         <li>
                             <a href="/static/item/">
@@ -629,7 +637,7 @@
 
                 <div class="box-btns clear">
                     <div class="box-btns-one">
-                        <input type="text" name="" id="" value="1"/>
+                        <input type="text" name="" id="numInput" value="1"/>
                         <div class="box-btns-one1">
 
                             <div>
@@ -645,9 +653,14 @@
 
                         </div>
                     </div>
-                    <div class="box-btns-two">
-                        <a href="/static/item/../商品分类\index.html">
-                            立即预约
+                    <div class="box-btns-two" th:if="${item.seckillInfo != null && (#dates.createNow().getTime >= item.seckillInfo.startTime && #dates.createNow().getTime <= item.seckillInfo.endTime)}">
+                        <a href="#" id="secKillA" th:attr="skuId=${item.info.skuId},sessionId=${item.seckillInfo.promotionSessionId},code=${item.seckillInfo.randomCode}">
+                            立即抢购
+                        </a>
+                    </div>
+                    <div class="box-btns-two" th:if="${item.seckillInfo == null || (#dates.createNow().getTime < item.seckillInfo.startTime && #dates.createNow().getTime > item.seckillInfo.endTime)}">
+                        <a href="#" id="addToCartA" th:attr="skuId=${item.info.skuId}">
+                            加入购物车
                         </a>
                     </div>
                     <div class="box-btns-three">
@@ -1301,7 +1314,8 @@
 <script>
     //选中不同的销售属性跳转不同的sku商品
     $(".sku_attr_value").click(function () {
-        var skus = new Array();4
+        var skus = new Array();
+        4
         //1.点击的元素先添加上自定义的属性，为了识别点击其他销售属性选项后。其他属性选项所携带的sku值：skuIds
         $(this).addClass("clicked");
         var curr = $(this).attr("skus").split(",");
@@ -1311,18 +1325,18 @@
         $(this).parent().parent().find(".sku_attr_value").removeClass("checked")
 
         //2.获取到另外一个选中的属性的组合
-        $("a[class='sku_attr_value checked']").each(function (){
+        $("a[class='sku_attr_value checked']").each(function () {
             skus.push($(this).attr("skus").split(","));
         });
         // console.log(skus);
         //3.取出他们的交集，得到skuId
         // console.log($(skus[0]).filter(skus[1])[0]);
         var filterEle = skus[0]
-        for(var i = 1; i < skus.length; i++){
+        for (var i = 1; i < skus.length; i++) {
             filterEle = $(filterEle).filter($(skus[i]));
         }
         console.log(filterEle[0]);
-        location.href = "http://item.gulimall.com/"+filterEle[0]+".html";
+        location.href = "http://item.gulimall.com/" + filterEle[0] + ".html";
 
         //4.跳转
     })
@@ -1334,6 +1348,26 @@
         // $("a[class='sku_attr_value']").css({"border": "solid 1px #CCC"});
         $(".sku_attr_value").parent().css({"border": "solid 1px #CCC"});
         $("a[class='sku_attr_value checked']").parent().css({"border": "solid 1px red"});
+    })
+
+    $("#addToCartA").click(function () {
+        var num = $("#numInput").val();
+        var skuId = $(this).attr("skuId")
+        location.href = 'http://cart.gulimall.com/addToCart?skuId=' + skuId + '&num=' + num;
+        return false;
+    })
+
+    $("#secKillA").click(function () {
+        var isLogin = [[${session.loginUser!=null}]]
+        if(isLogin) {
+            var killId =$(this).attr("sessionid")+"_"+$(this).attr("skuId");
+            var key = $(this).attr("code");
+            var num =$("#numInput").val();
+            location.href = "http://seckill.gulimall.com/kill?killId="+killId+"&key="+key+"&num="+num;
+        }else {
+            alert("秒杀请先登录");
+        }
+        return false
     })
 </script>
 </html>

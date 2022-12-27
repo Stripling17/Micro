@@ -24,6 +24,8 @@ public class CorsConf {
         config.addAllowedMethod("*");
         //允许哪些请求来源进行跨域
         config.addAllowedOrigin("http://localhost:8001");
+        config.addAllowedOrigin("http://order.gulimall.com");
+        config.addAllowedOrigin("http://gulimall.com");
         //允许携带cookie进行跨域
         //When allowCredentials is true, allowedOrigins cannot contain the special value "*"
         //since that cannot be set on the "Access-Control-Allow-Origin" response header

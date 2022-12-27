@@ -426,7 +426,7 @@ public class MallSearchServiceImpl implements MallSearchService {
 //            e.printStackTrace();
 //        }
         String replace = param.get_queryString().replace("&" + key + "=" + encode, "");
-//        if(replace.contains(encode)){
+//        if(param.get_queryString().contains(key + "=" + encode)){
 //            replace = param.get_queryString().replace("?" + key + "=" + encode, "");
 //        }
         return replace;

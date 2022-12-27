@@ -1,22 +1,58 @@
-spring:
-  datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://192.168.56.10:3306/gulimall_oms
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-  application:
-    name: gulimall-order
-
-mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*.xml
-  global-config:
-    db-config:
-      id-type: auto
-
-server:
-  port: 9000
+#spring:
+#  datasource:
+#    username: root
+#    password: root
+#    url: jdbc:mysql://192.168.56.10:3307/gulimall_oms
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+#  application:
+#    name: gulimall-order
+#  thymeleaf:
+#    cache: false
+#  session:
+#    store-type: redis
+#  redis:
+#    host: 192.168.56.10
+#    port: 6379
+#  mvc:
+#    format:
+#      date: yyyy-MM-dd HH:mm:ss
+#
+#mybatis-plus:
+#  mapper-locations: classpath:/mapper/**/*.xml
+#  global-config:
+#    db-config:
+#      id-type: auto
+#
+#server:
+#  port: 9000
+#
+#seata:
+#  tx-service-group: gulimall-order-fescar-service-group
+#
+#seata:
+#  #事务群组（可以每个应用独立取名，也可以使用相同的名字），要与服务端nacos-config.txt中service.vgroup_mapping中存在,并且要保证多个群组情况下后缀名要保持一致-tx_group
+#  enabled: true
+#  enable-auto-data-source-proxy: false #是否开启数据源自动代理,默认为true
+#  tx-service-group: gulimall-order-fescar-service-group  #要与配置文件中的vgroupMapping一致
+#  registry:  #registry根据seata服务端的registry配置
+#    type: nacos #默认为file
+#    nacos:
+#      application: ${spring.application.name} #配置自己的seata服务
+#      server-addr: ${spring.cloud.nacos.discovery.server-addr} #根据自己的seata服务配置
+#      cluster: default # 配置自己的seata服务cluster, 默认为 default
+#      group: SEATA_GROUP #根据自己的seata服务配置
+#      namespace: c3f8904b-6ebe-4b35-978c-6d213e03262d
+#      ##改为自己的nacos的namespace,这里填写的是刚才创建seata命名空间的id
+#  config:
+#    type: nacos #默认file,如果使用file不配置下面的nacos,直接配置seata.service
+#    nacos:
+#      server-addr: ${spring.cloud.nacos.discovery.server-addr} #配置自己的nacos地址
+#      group: SEATA_GROUP #配置自己的dev
+#      dataId: seataServer.properties # #配置自己的dataId,由于搭建服务端时把客户端的配置也写在了seataServer.properties,所以这里用了和服务端一样的配置文件,实际客户端和服务端的配置文件分离出来更好
+#      namespace: e9c40294-cf07-4b09-8935-09cb2fb1dc3d
+#      #改为自己的nacos的namespace,这里填写的是刚才创建seata命名空间的id

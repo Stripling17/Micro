@@ -1,6 +1,7 @@
 package com.xinchen.gulimall.cart.vo;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * 整个购物车
  * 需要计算的属性，必须重写他的get方法，保证每次获取属性都会计算
  */
-@Data
+@NoArgsConstructor
 public class Cart {
     private List<CartItem> items;
 
@@ -54,8 +55,10 @@ public class Cart {
         //计算购物项总价
         if(items!=null && items.size() > 0){
             for (CartItem item : items) {
-                item.getTotalPrice();
-                amount = amount.add(totalAmount);
+                if(item.getCheck()){
+                    BigDecimal totalPrice = item.getTotalPrice();
+                    amount = amount.add(totalPrice);
+                }
             }
         }
         //减去优惠的总价
