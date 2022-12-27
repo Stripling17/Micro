@@ -214,6 +214,7 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     private void saveSessionInfos(List<SeckillSessionWithSkus> sessions) {
+        if(sessions != null)
         sessions.stream().forEach(session -> {
             long startTime = session.getStartTime().getTime();
             long endTime = session.getEndTime().getTime();

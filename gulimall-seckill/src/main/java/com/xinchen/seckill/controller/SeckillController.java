@@ -3,6 +3,7 @@ package com.xinchen.seckill.controller;
 import com.xinchen.common.utils.R;
 import com.xinchen.seckill.service.SeckillService;
 import com.xinchen.seckill.to.SeckillSKuRedisTo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 public class SeckillController {
 
@@ -22,6 +24,7 @@ public class SeckillController {
     @ResponseBody
     @GetMapping("/currentSeckillSKus")
     public R getCurrentSeckillSKus() {
+        log.info("/currentSeckillSKus正在执行。。。");
         List<SeckillSKuRedisTo> vos = seckillService.getCurrentSeckillSKus();
 
         return R.ok().setData(vos);
