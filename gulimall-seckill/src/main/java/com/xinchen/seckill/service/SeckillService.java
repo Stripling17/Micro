@@ -9,7 +9,7 @@ public interface SeckillService {
     void uploadSeckillSkuLatest3Days();
 
     //返回当前时间可以参与秒杀的商品信息
-    List<SeckillSKuRedisTo> getCurrentSeckillSKus();
+    List<SeckillSKuRedisTo> getCurrentSeckillSkus();
 
     SeckillSKuRedisTo getSkuSeckillInfo(Long skuId);
 

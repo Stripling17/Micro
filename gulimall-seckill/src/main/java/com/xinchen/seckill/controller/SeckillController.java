@@ -23,9 +23,9 @@ public class SeckillController {
      */
     @ResponseBody
     @GetMapping("/currentSeckillSKus")
-    public R getCurrentSeckillSKus() {
+    public R getCurrentSeckillSkus() {
         log.info("/currentSeckillSKus正在执行。。。");
-        List<SeckillSKuRedisTo> vos = seckillService.getCurrentSeckillSKus();
+        List<SeckillSKuRedisTo> vos = seckillService.getCurrentSeckillSkus();
 
         return R.ok().setData(vos);
     }
@@ -39,6 +39,11 @@ public class SeckillController {
     @ResponseBody
     @GetMapping("/sku/seckill/{skuId}")
     public R getSkuSeckillInfo(@PathVariable("skuId") Long skuId) {
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         SeckillSKuRedisTo to = seckillService.getSkuSeckillInfo(skuId);
 
         return R.ok().setData(to);
